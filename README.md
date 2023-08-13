@@ -38,9 +38,12 @@ While SHAP can explain the output of any machine learning model, we have develop
 ```python
 import xgboost
 import shap
+from sklearn.datasets import fetch_openml
 
-# train an XGBoost model
-X, y = shap.datasets.boston()
+boston = fetch_openml(data_id=531)
+X = boston.data.astype(int)
+y = boston.target.astype(int)
+
 model = xgboost.XGBRegressor().fit(X, y)
 
 # explain the model's predictions using SHAP
@@ -71,7 +74,8 @@ If we take many force plot explanations such as the one shown above, rotate them
 
 ```python
 # visualize all the training set predictions
-shap.plots.force(shap_values)
+shap.initjs()
+shap.plots.force(shap_values[0])
 ```
 
 <p align="center">
